@@ -1,8 +1,8 @@
 import React from 'react'
 
-const BookShelfChanger = props => (
+const BookshelfChanger = ({ defaultItem }) => (
   <div className='book-shelf-changer'>
-    <select>
+    <select value={defaultItem || 'none'}>
       <option value='none' disabled>Move to...</option>
       <option value='currentlyReading'>
         Currently Reading
@@ -14,4 +14,4 @@ const BookShelfChanger = props => (
   </div>
 )
 
-export default BookShelfChanger
+export default BookshelfChanger

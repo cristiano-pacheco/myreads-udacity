@@ -2,14 +2,13 @@ import React, { Component } from 'react'
 
 import { getAll } from './BooksAPI'
 import Header from './components/header'
-import Book from './components/book'
+import Bookshelf from './components/bookshelf'
 import './App.css'
 
 class App extends Component {
-  constructor (props) {
-    super(props)
+  constructor () {
+    super()
     this.state = {
-      books: [],
       currentlyReading: [],
       wantToRead: [],
       read: []
@@ -38,46 +37,17 @@ class App extends Component {
         <Header />
         <div className='list-books-content'>
           <div>
-
-            <div className='bookshelf'>
-              <h2 className='bookshelf-title'>Currently Reading</h2>
-              <div className='bookshelf-books'>
-                <ol className='books-grid'>
-                  {this.state.currentlyReading.map((book, index) => (
-                    <li key={index}>
-                      <Book book={book} />
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            </div>
-
-            <div className='bookshelf'>
-              <h2 className='bookshelf-title'>Want To Read</h2>
-              <div className='bookshelf-books'>
-                <ol className='books-grid'>
-                  {this.state.wantToRead.map((book, index) => (
-                    <li key={index}>
-                      <Book book={book} />
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            </div>
-
-            <div className='bookshelf'>
-              <h2 className='bookshelf-title'>Read</h2>
-              <div className='bookshelf-books'>
-                <ol className='books-grid'>
-                  {this.state.read.map((book, index) => (
-                    <li key={index}>
-                      <Book book={book} />
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            </div>
-
+            <Bookshelf
+              title='Currently Reading'
+              type='currentlyReading'
+              books={this.state.currentlyReading}
+            />
+            <Bookshelf
+              title='Want To Read'
+              type='wantToRead'
+              books={this.state.wantToRead}
+            />
+            <Bookshelf title='Read' type='read' books={this.state.read} />
           </div>
         </div>
       </div>

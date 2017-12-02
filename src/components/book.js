@@ -1,12 +1,12 @@
 import React from 'react'
 import BookCover from './book-cover'
-import BookShelfChanger from './book-shelf-changer'
+import BookshelfChanger from './bookshelf-changer'
 
-const Book = ({ book }) => (
+const Book = ({ book, defaultItem }) => (
   <div className='book'>
     <div className='book-top'>
       <BookCover urlImage={book.imageLinks.thumbnail} />
-      <BookShelfChanger />
+      <BookshelfChanger defaultItem={defaultItem} />
     </div>
     <div className='book-title'>{book.title}</div>
     {book.authors.map((autor, index) => (
