@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { getAll } from './BooksAPI'
+import * as BooksAPI from './BooksAPI'
 import Header from './components/header'
 import Bookshelf from './components/bookshelf'
 import './App.css'
@@ -26,7 +26,7 @@ class App extends Component {
   }
 
   getAllBooks () {
-    getAll().then(data => {
+    BooksAPI.getAll().then(data => {
       const currentlyReading = data.filter(
         book => book.shelf === 'currentlyReading'
       )
@@ -39,6 +39,16 @@ class App extends Component {
 
   changeBookshelf (event, book) {
     const shelf = event.target.value
+    this.updateBook(book, shelf).then(() => {
+      this.updateStateBook(book, shelf)
+    })
+  }
+
+  updateBook (book, shelf) {
+    return BooksAPI.update(book, shelf)
+  }
+
+  updateStateBook (book, shelf) {
     this.setState(state => {
       const oldShelf = book.shelf
       const books = state[oldShelf]
