@@ -5,6 +5,10 @@ import Header from './components/header'
 import Bookshelf from './components/bookshelf'
 import './App.css'
 
+const removeBook = (books, book) => {
+  return books.filter(item => item.id !== book.id)
+}
+
 class App extends Component {
   constructor () {
     super()
@@ -13,6 +17,12 @@ class App extends Component {
       wantToRead: [],
       read: []
     }
+
+    this.changeBookshelf = this.changeBookshelf.bind(this)
+  }
+
+  componentDidMount () {
+    this.getAllBooks()
   }
 
   getAllBooks () {
@@ -27,8 +37,22 @@ class App extends Component {
     })
   }
 
-  componentDidMount () {
-    this.getAllBooks()
+  changeBookshelf (event, book) {
+    const shelf = event.target.value
+    this.setState(state => {
+      const oldShelf = book.shelf
+      const books = state[oldShelf]
+      book.shelf = shelf
+
+      if (shelf === 'none') {
+        return { [oldShelf]: removeBook(books, book) }
+      }
+
+      return {
+        [shelf]: state[shelf].concat(book),
+        [oldShelf]: removeBook(books, book)
+      }
+    })
   }
 
   render () {
@@ -41,13 +65,20 @@ class App extends Component {
               title='Currently Reading'
               type='currentlyReading'
               books={this.state.currentlyReading}
+              onChangeBookshelf={this.changeBookshelf}
             />
             <Bookshelf
               title='Want To Read'
               type='wantToRead'
               books={this.state.wantToRead}
+              onChangeBookshelf={this.changeBookshelf}
             />
-            <Bookshelf title='Read' type='read' books={this.state.read} />
+            <Bookshelf
+              title='Read'
+              type='read'
+              books={this.state.read}
+              onChangeBookshelf={this.changeBookshelf}
+            />
           </div>
         </div>
       </div>

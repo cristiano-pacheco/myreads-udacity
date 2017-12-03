@@ -1,8 +1,8 @@
 import React from 'react'
 
-const BookshelfChanger = ({ defaultItem }) => (
+const BookshelfChanger = ({ defaultItem, onChangeBookshelf }) => (
   <div className='book-shelf-changer'>
-    <select value={defaultItem || 'none'}>
+    <select value={defaultItem || 'none'} onChange={onChangeBookshelf}>
       <option value='none' disabled>Move to...</option>
       <option value='currentlyReading'>
         Currently Reading
