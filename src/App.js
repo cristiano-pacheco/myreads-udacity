@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Route } from 'react-router-dom'
 
 import * as BooksAPI from './BooksAPI'
 import Header from './components/header'
@@ -70,26 +71,34 @@ class App extends Component {
       <div className='app'>
         <Header />
         <div className='list-books-content'>
-          <div>
-            <Bookshelf
-              title='Currently Reading'
-              type='currentlyReading'
-              books={this.state.currentlyReading}
-              onChangeBookshelf={this.changeBookshelf}
-            />
-            <Bookshelf
-              title='Want To Read'
-              type='wantToRead'
-              books={this.state.wantToRead}
-              onChangeBookshelf={this.changeBookshelf}
-            />
-            <Bookshelf
-              title='Read'
-              type='read'
-              books={this.state.read}
-              onChangeBookshelf={this.changeBookshelf}
-            />
-          </div>
+
+          <Route
+            exact
+            path='/'
+            render={() => (
+              <div>
+                <Bookshelf
+                  title='Currently Reading'
+                  type='currentlyReading'
+                  books={this.state.currentlyReading}
+                  onChangeBookshelf={this.changeBookshelf}
+                />
+                <Bookshelf
+                  title='Want To Read'
+                  type='wantToRead'
+                  books={this.state.wantToRead}
+                  onChangeBookshelf={this.changeBookshelf}
+                />
+                <Bookshelf
+                  title='Read'
+                  type='read'
+                  books={this.state.read}
+                  onChangeBookshelf={this.changeBookshelf}
+                />
+              </div>
+            )}
+          />
+
         </div>
       </div>
     )
