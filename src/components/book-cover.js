@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const BookCover = ({ urlImage }) => (
   <div
@@ -10,5 +11,9 @@ const BookCover = ({ urlImage }) => (
     }}
   />
 )
+
+BookCover.propTypes = {
+  urlImage: PropTypes.string.isRequired
+}
 
 export default BookCover
