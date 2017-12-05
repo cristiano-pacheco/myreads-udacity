@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Link } from 'react-router-dom'
 
 import * as BooksAPI from './BooksAPI'
 import Header from './components/header'
 import Bookshelf from './components/bookshelf'
+import Search from './components/search'
 import './App.css'
 
 const removeBook = (books, book) => {
@@ -69,14 +70,14 @@ class App extends Component {
   render () {
     return (
       <div className='app'>
-        <Header />
-        <div className='list-books-content'>
 
+        <div className='list-books-content'>
           <Route
             exact
             path='/'
             render={() => (
               <div>
+                <Header />
                 <Bookshelf
                   title='Currently Reading'
                   type='currentlyReading'
@@ -95,10 +96,15 @@ class App extends Component {
                   books={this.state.read}
                   onChangeBookshelf={this.changeBookshelf}
                 />
+                <div className='open-search'>
+                  <Link to='/search'>
+                    Add a book
+                  </Link>
+                </div>
               </div>
             )}
           />
-
+          <Route path='/search' component={Search} />
         </div>
       </div>
     )
