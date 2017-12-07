@@ -9,20 +9,21 @@ const Book = ({ book, defaultItem, onChangeBookshelf }) => (
     <div className='book-top'>
       <BookCover urlImage={book.imageLinks.thumbnail} />
       <BookshelfChanger
-        defaultItem={defaultItem}
+        defaultItem={defaultItem || ''}
         onChangeBookshelf={e => onChangeBookshelf(e, book)}
       />
     </div>
     <div className='book-title'>{book.title}</div>
-    {book.authors.map((autor, index) => (
-      <div key={index} className='book-authors'>{autor}</div>
-    ))}
+    {book.authors &&
+      book.authors.map((autor, index) => (
+        <div key={index} className='book-authors'>{autor}</div>
+      ))}
   </div>
 )
 
 Book.propTypes = {
   book: PropTypes.object.isRequired,
-  defaultItem: PropTypes.string.isRequired,
+  defaultItem: PropTypes.string,
   onChangeBookshelf: PropTypes.func.isRequired
 }
 
