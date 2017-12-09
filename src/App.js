@@ -60,10 +60,18 @@ class App extends Component {
         return { [oldShelf]: removeBook(books, book) }
       }
 
-      return {
-        [shelf]: state[shelf].concat(book),
-        [oldShelf]: removeBook(books, book)
+      const bookshelf = {
+        [shelf]: state[shelf].concat(book)
       }
+
+      let removedBook
+      if (books) {
+        removedBook = {
+          [oldShelf]: removeBook(books, book)
+        }
+      }
+
+      return { ...bookshelf, removedBook }
     })
   }
 
