@@ -191,3 +191,17 @@ body,
   text-align: center;
   font-size: 0.8em;
 }
+
+
+/* loading */
+
+.loading {
+  width: 100%;
+}
+
+.loading img {
+  position: relative;
+  float: right;
+  margin-top: 80px;
+  margin-right: 15px;
+}
