@@ -18,7 +18,10 @@
   },
   "standard": {
     "globals": [
-      "it"
+      "it",
+      "describe",
+      "test",
+      "expect"
     ]
   },
   "devDependencies": {
