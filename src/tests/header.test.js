@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 import Header from '../components/header'
 
 describe('<Header />', () => {
-  test('shallow renders correctly', () => {
+  it('should render <Header /> component', () => {
     expect(shallow(<Header />))
   })
 })
