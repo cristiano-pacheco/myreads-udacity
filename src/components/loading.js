@@ -1,7 +1,7 @@
 import React from 'react'
 import loading from '../loading.gif'
 
-const Loading = ({ isLoading }) => (
+const Loading = () => (
   <div className='loading'>
     <img src={loading} alt='loading...' />
   </div>
