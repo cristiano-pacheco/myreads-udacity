@@ -21,7 +21,8 @@
       "it",
       "describe",
       "test",
-      "expect"
+      "expect",
+      "jest"
     ]
   },
   "devDependencies": {

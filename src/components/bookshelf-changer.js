@@ -16,7 +16,7 @@ const BookshelfChanger = ({ defaultItem, onChangeBookshelf }) => (
 )
 
 BookshelfChanger.propTypes = {
-  defaultItem: PropTypes.string.isRequired,
+  defaultItem: PropTypes.string,
   onChangeBookshelf: PropTypes.func.isRequired
 }
 
