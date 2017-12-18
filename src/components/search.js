@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import Book from './book'
+import BookGrid from './book-grid'
 
 const Search = ({ books, onSearchBooks, onChangeBookshelf }) => (
   <div className='search-books'>
@@ -16,14 +16,7 @@ const Search = ({ books, onSearchBooks, onChangeBookshelf }) => (
       </div>
     </div>
     <div className='search-books-results'>
-      <ol className='books-grid'>
-        {books &&
-          books.map((book, index) => (
-            <li key={index}>
-              <Book book={book} onChangeBookshelf={onChangeBookshelf} />
-            </li>
-          ))}
-      </ol>
+      <BookGrid books={books} onChangeBookshelf={onChangeBookshelf} />
     </div>
   </div>
 )
