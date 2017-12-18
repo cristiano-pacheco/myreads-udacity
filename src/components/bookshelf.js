@@ -1,23 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Book from './book'
+import BookGrid from './book-grid'
 
 const Bookshelf = ({ title, type, books, onChangeBookshelf }) => (
   <div className='bookshelf'>
     <h2 className='bookshelf-title'>{title}</h2>
     <div className='bookshelf-books'>
-      <ol className='books-grid'>
-        {books.map((book, index) => (
-          <li key={index}>
-            <Book
-              book={book}
-              defaultItem={type}
-              onChangeBookshelf={onChangeBookshelf}
-            />
-          </li>
-        ))}
-      </ol>
+      <BookGrid books={books} onChangeBookshelf={onChangeBookshelf} />
     </div>
   </div>
 )
