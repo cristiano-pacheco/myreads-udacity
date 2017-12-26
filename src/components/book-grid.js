@@ -7,7 +7,7 @@ const BookGrid = ({ books, onChangeBookshelf }) => (
   <ol className='books-grid'>
     {books.map((book, index) => (
       <li key={index}>
-        <Book book={book} onChangeBookshelf={onChangeBookshelf} />
+        <Book book={book} onChangeBookshelf={onChangeBookshelf} defaultItem={book.shelf} />
       </li>
     ))}
   </ol>

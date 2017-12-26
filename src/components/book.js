@@ -4,12 +4,12 @@ import PropTypes from 'prop-types'
 import BookCover from './book-cover'
 import BookshelfChanger from './bookshelf-changer'
 
-const Book = ({ book, defaultItem, onChangeBookshelf }) => (
+const Book = ({ book, onChangeBookshelf }) => (
   <div className='book'>
     <div className='book-top'>
       <BookCover urlImage={book.imageLinks.thumbnail} />
       <BookshelfChanger
-        defaultItem={defaultItem || ''}
+        defaultItem={book.shelf || ''}
         onChangeBookshelf={e => onChangeBookshelf(e, book)}
       />
     </div>
@@ -23,7 +23,6 @@ const Book = ({ book, defaultItem, onChangeBookshelf }) => (
 
 Book.propTypes = {
   book: PropTypes.object.isRequired,
-  defaultItem: PropTypes.string,
   onChangeBookshelf: PropTypes.func.isRequired
 }
 
