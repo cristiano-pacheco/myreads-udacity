@@ -1,14 +1,7 @@
 {
-    "editor.formatOnSave": true,
-    "eslint.enable": true,
-    "prettier.eslintIntegration": true,
-    "prettier.singleQuote": true,
-    "prettier.jsxBracketSameLine": false,
-    "standard.enable": true,
+    "editor.formatOnSave": false,
+    "eslint.enable": false,
     "files.associations": {
         "*.js": "javascriptreact"
     },
-    "prettier.trailingComma": "none",
-    "prettier.semi": false,
-    "prettier.parser": "flow"
 }
