@@ -6,6 +6,14 @@ Of course, you are free to start this project from scratch if you wish! Just be 
 
 ## TL;DR
 
+To run scripts:
+
+* to run tests `npm test`
+* to run lint `npm run lint`
+* to fix automatically problems with code style `npm run lint:fix`
+
+## TL;DR
+
 To get started developing right away:
 
 * install all project dependencies with `npm install`
