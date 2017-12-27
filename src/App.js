@@ -10,19 +10,14 @@ import Loading from './components/loading'
 
 import './App.css'
 
-const removeBook = (books, book) => {
-  return books.filter(item => item.id !== book.id)
-}
-
 class App extends Component {
   constructor () {
     super()
     this.state = {
       isLoading: false,
-      currentlyReading: [],
-      wantToRead: [],
-      read: [],
+      hideBooks: true,
       books: [],
+      booksSearched: [],
       bookshelves: [
         {
           title: 'Currently Reading',
@@ -44,6 +39,7 @@ class App extends Component {
     this.searchBooks = this.searchBooks.bind(this)
     this.searchBooksAjax = this.searchBooksAjax.bind(this)
     this.searchBooksAjax = debounce(this.searchBooksAjax, 500)
+    this.onClickClose = this.onClickClose.bind(this)
   }
 
   componentDidMount () {
@@ -52,14 +48,8 @@ class App extends Component {
 
   getAllBooks () {
     this.onLoading()
-    BooksAPI.getAll().then(data => {
-      const currentlyReading = data.filter(
-        book => book.shelf === 'currentlyReading'
-      )
-      const wantToRead = data.filter(book => book.shelf === 'wantToRead')
-      const read = data.filter(book => book.shelf === 'read')
-
-      this.setState({ currentlyReading, wantToRead, read, isLoading: false })
+    BooksAPI.getAll().then(books => {
+      this.setState({ books, booksSearched: [], isLoading: false })
     })
   }
 
@@ -68,6 +58,7 @@ class App extends Component {
     const shelf = event.target.value
     this.updateBook(book, shelf).then(() => {
       this.updateStateBook(book, shelf)
+      this.updateStateBookSearched(book, shelf)
     })
   }
 
@@ -75,29 +66,34 @@ class App extends Component {
     return BooksAPI.update(book, shelf)
   }
 
-  updateStateBook (book, shelf) {
-    this.setState(state => {
-      const oldShelf = book.shelf
-      const books = state[oldShelf]
-      book.shelf = shelf
-
-      if (shelf === 'none') {
-        return { [oldShelf]: removeBook(books, book) }
+  updateStateBook (bookUpdate, shelf) {
+    const books = this.state.books.map(book => {
+      if (book.id === bookUpdate.id) {
+        return { ...book, shelf }
       }
-
-      const bookshelf = {
-        [shelf]: state[shelf].concat(book)
-      }
-
-      let removedBook = {}
-      if (books) {
-        removedBook = {
-          [oldShelf]: removeBook(books, book)
-        }
-      }
-
-      return { ...bookshelf, ...removedBook, isLoading: false }
+      return book
     })
+
+    this.setState({
+      books,
+      isLoading: false
+    })
+  }
+
+  updateStateBookSearched (bookUpdate, shelf) {
+    if (this.state.booksSearched.length) {
+      const booksSearched = this.state.booksSearched.map(book => {
+        if (book.id === bookUpdate.id) {
+          return { ...book, shelf }
+        }
+        return book
+      })
+
+      this.setState({
+        booksSearched,
+        isLoading: false
+      })
+    }
   }
 
   onLoading () {
@@ -106,26 +102,42 @@ class App extends Component {
 
   searchBooks (event) {
     const value = event.target.value
-    this.onLoading()
     if (!value) {
-      this.clearBooks()
+      this.setState({ hideBooks: true, isLoading: false })
       return
     }
     this.searchBooksAjax(value)
   }
 
   searchBooksAjax (value) {
-    BooksAPI.search(value).then(data => {
-      if ('error' in data) {
-        this.clearBooks()
-        return
-      }
-      this.setState({ books: data, isLoading: false })
-    })
+    this.onLoading()
+    BooksAPI.search(value)
+      .then(books => {
+        if ('error' in books) {
+          this.setState({ hideBooks: true, isLoading: false })
+          return
+        }
+        const booksSearched = books.map(book => {
+          const bookInState = this.findBookInState(book)
+          if (bookInState) {
+            return { ...bookInState }
+          }
+          return book
+        })
+        this.setState({
+          booksSearched,
+          isLoading: false,
+          hideBooks: false
+        })
+      })
   }
 
-  clearBooks () {
-    this.setState({ books: [], isLoading: false })
+  findBookInState (book) {
+    return this.state.books.find(b => b.id === book.id)
+  }
+
+  onClickClose () {
+    this.getAllBooks()
   }
 
   render () {
@@ -147,7 +159,9 @@ class App extends Component {
                       key={index}
                       title={shelf.title}
                       type={shelf.type}
-                      books={this.state[shelf.type]}
+                      books={this.state.books.filter(book => {
+                        return book.shelf === shelf.type
+                      })}
                       onChangeBookshelf={this.changeBookshelf}
                     />
                   ))}
@@ -164,9 +178,11 @@ class App extends Component {
             path='/search'
             render={() => (
               <Search
-                books={this.state.books}
+                books={this.state.booksSearched}
                 onSearchBooks={this.searchBooks}
                 onChangeBookshelf={this.changeBookshelf}
+                hideBooks={this.state.hideBooks}
+                onClickClose={this.onClickClose}
               />
             )}
           />
