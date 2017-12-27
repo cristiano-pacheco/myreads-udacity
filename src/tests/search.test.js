@@ -15,6 +15,7 @@ describe('<Search />', () => {
             books={[]}
             onSearchBooks={searchBooks}
             onChangeBookshelf={onChangeBookshelf}
+            hideBooks={true}
           />
         </MemoryRouter>
       )
@@ -29,6 +30,7 @@ describe('<Search />', () => {
             books={[]}
             onSearchBooks={searchBooks}
             onChangeBookshelf={onChangeBookshelf}
+            hideBooks={true}
           />
         </MemoryRouter>
       )
@@ -42,6 +44,7 @@ describe('<Search />', () => {
           books={[]}
           onSearchBooks={searchBooks}
           onChangeBookshelf={onChangeBookshelf}
+          hideBooks={true}
         />
       </MemoryRouter>
     )
@@ -61,6 +64,7 @@ describe('<Search />', () => {
           books={[]}
           onSearchBooks={searchBooks}
           onChangeBookshelf={onChangeBookshelf}
+          hideBooks={true}
         />
       </MemoryRouter>
     )
